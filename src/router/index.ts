@@ -46,7 +46,7 @@ const routes = [
 
 const router = createRouter({
     routes,
-    history: createWebHistory(),
+    history: createWebHistory('/mng/'),
     scrollBehavior(to, from, savedPosition) {
         if (savedPosition) {
             return savedPosition;
