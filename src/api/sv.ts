@@ -30,8 +30,17 @@ export async function getServiceState(svname: string): Promise<{ group_id: strin
     return (await get('/mng/api/sv/state', { svname })).data
 }
 
+export type GroupServiceDetail = {
+    gid: number;
+    group_name: string;
+    sv: {
+        svname: string;
+        enabled: boolean;
+        enabled_globally: boolean;
+    }[];
+};
 export async function getGroupServiceState(gid: number)
-    : Promise<{ gid: number, group_name: string, sv: { svname: string, enabled: boolean, enabled_globally: boolean }[] }> {
+    : Promise<GroupServiceDetail> {
     return (await get('/mng/api/sv', { gid })).data
 }
 

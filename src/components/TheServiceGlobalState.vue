@@ -11,12 +11,13 @@
 
 <script lang="ts" setup>
 import { NList, NListItem, NSwitch, NThing, NSpin, NGrid, NGi, NDataTable, NCheckbox } from "naive-ui";
+import type { TableColumn, TableColumns } from "naive-ui/lib/data-table/src/interface";
 import { computed, h, ref, toRefs, watch } from "vue";
 import { useRouter } from "vue-router";
 import { getAllServiceDetail, getAllServiceGlobalState, getServiceDetail, getServiceState, setServiceGlobalState } from "../api/sv";
 
 
-const columns = [
+const columns: TableColumns<any> = [
     {
         title: '服务名称',
         key: 'svname',
@@ -30,22 +31,25 @@ const columns = [
     {
         title: '列表可见性',
         key: 'visiable',
-        width: '130px',
+        width: 130,
         align: 'center',
         render: (row) => h(NCheckbox, {
             disabled: false, checked: row.visiable,
-            onClick: (event) => event.stopPropagation()
+            onClick: (event: any) => event.stopPropagation()
         }, {}),
-        filter: (value: boolean, row) => {
+        // @ts-ignore
+        filter: (value: boolean, row: any) => {
             return row.visiable === value
         },
         filterOptions: [
             {
                 label: '显示',
+                // @ts-ignore
                 value: true
             },
             {
                 label: '隐藏',
+                // @ts-ignore
                 value: false
             }
         ],
@@ -61,34 +65,37 @@ const columns = [
     {
         title: '全局开关',
         key: 'enable',
-        width: '120px',
+        width: 120,
         align: 'center',
         render: (row) => h(
             NSwitch,
             {
                 value: row.enabled,
                 onUpdateValue: (v) => changeState(row.svname, v).then(() => row.enabled = v),
-                onClick: (event) => event.stopPropagation()
+                onClick: (event: any) => event.stopPropagation()
             },
             {}
         ),
-        filter: (value: boolean, row) => {
+        // @ts-ignore
+        filter: (value: boolean, row: any) => {
             return row.enabled === value
         },
         filterOptions: [
             {
                 label: '已开启',
+                // @ts-ignore
                 value: true
             },
             {
                 label: '已禁用',
+                // @ts-ignore
                 value: false
             }
         ],
     }
 ]
 const router = useRouter()
-const rowProps = (row) => {
+const rowProps = (row: any) => {
     return {
         style: 'cursor: pointer;',
         onClick: () => {

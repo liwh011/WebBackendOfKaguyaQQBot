@@ -21,6 +21,7 @@ import { NLayout, NLayoutHeader, NLayoutContent, NBreadcrumb, NBreadcrumbItem, N
 import { ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { getGroupServiceState } from "../api/sv";
+import type { GroupServiceDetail } from "../api/sv";
 import BasicPageTempl from "./BasicPageTempl.vue";
 import TheServiceStatusOfGroup from "../components/TheServiceStatusOfGroup.vue";
 
@@ -33,7 +34,7 @@ const handleBack = () => {
     router.go(-1)
 }
 
-const groupData = ref({} as any)
+const groupData = ref({} as GroupServiceDetail)
 getGroupServiceState(gid).then(data => {
     groupData.value = data
 })

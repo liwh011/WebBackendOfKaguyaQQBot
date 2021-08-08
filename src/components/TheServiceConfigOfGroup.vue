@@ -1,6 +1,6 @@
 <template>
     <n-form :label-width="80" :model="cfgFormModel" ref="formRef">
-        <n-form-item :label="varName" v-for="(varVal, varName) in cfgFormModel" key="group">
+        <n-form-item :label="varName.toString()" v-for="(varVal, varName) in cfgFormModel" key="group">
             <n-input-number
                 v-model:value="cfgFormModel[varName]"
                 placeholder="输入数字"

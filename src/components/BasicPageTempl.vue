@@ -6,7 +6,7 @@
             :native-scrollbar="false"
         >
             <n-menu
-                v-model:value="activeKey"
+                :value="activeKey"
                 @update:value="handleMenuChange"
                 :options="menuOptions"
             />
@@ -31,13 +31,19 @@
 </template>
 
 <script lang="ts"   setup>
+// @ts-nocheck
+
 import { NLayout, NLayoutSider, NLayoutContent, NLayoutFooter, NLayoutHeader, NMenu, useMessage } from 'naive-ui'
 import { useRouter } from 'vue-router'
+// @ts-ignore
 window.$message = useMessage()
 
 
 const props = defineProps({
-    activeKey: String,
+    activeKey: {
+        type: String,
+        default: '',
+    },
     hasSidebar: {
         type: Boolean,
         default: false
@@ -60,7 +66,9 @@ const menuOptions = [
         key: 'usrmng',
     },
 ]
-const handleMenuChange = (key: string, item) => {
+
+
+const handleMenuChange = (key: any) => {
     if (key === 'grpmng')
         router.push({ name: 'GroupManage' })
     else if (key === 'svmng')

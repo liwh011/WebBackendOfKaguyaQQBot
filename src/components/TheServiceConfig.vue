@@ -10,7 +10,7 @@
                 <template v-for="(cfgVarModel, cfgVar) in cfgFormModel" key="cfgVar">
                     <h4>{{ cfgVar }}</h4>
                     <n-form-item
-                        :label="group"
+                        :label="group.toString()"
                         v-for="(groupModel, group) in cfgVarModel"
                         key="group"
                     >

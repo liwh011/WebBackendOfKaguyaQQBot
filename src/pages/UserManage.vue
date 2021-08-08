@@ -12,10 +12,18 @@ import BasicPageTempl from "../components/BasicPageTempl.vue";
 import { NSpin, NDataTable, NSelect, NButton, NSpace } from "naive-ui";
 import { computed, h, ref, toRefs, watch } from "vue";
 import { getUserList, setUserRole } from "../api/user";
+import type { TableColumns } from "naive-ui/lib/data-table/src/interface";
 
 /**
  * 表格
  */
+type Row = {
+    uid: number;
+    role: number;
+    model: number;
+    editMode: boolean;
+}
+
 const roleLevels = [
     { label: 'BOT所有者', value: 99, },
     { label: 'BOT管理', value: 90, },
@@ -23,7 +31,7 @@ const roleLevels = [
     { label: '群管理', value: 10, },
     { label: '普通用户', value: 0, },
 ]
-const columns = [
+const columns: TableColumns = [
     {
         title: 'QQID',
         key: 'uid'
@@ -31,7 +39,7 @@ const columns = [
     {
         title: '权限等级',
         key: 'role',
-        render(row) {
+        render(row: any) {
             if (row.editMode) {
                 return h(
                     NSelect,
@@ -39,20 +47,20 @@ const columns = [
                         size: 'small',
                         options: roleLevels,
                         value: row.model,
-                        'onUpdate:value': value => row.model = value,
+                        'onUpdate:value': (value: any) => row.model = value,
                         style: 'width: 200px;'
-                    },
+                    }
                 )
             }
             else
-                return roleLevels.filter((v) => v.value === row.role)[0]?.label || row.role
+                return h('span', roleLevels.filter((v) => v.value === row.role)[0]?.label || row.role)
         }
     },
     {
         title: '操作',
         key: 'action',
-        width: '200px',
-        render(row) {
+        width: 200,
+        render(row: any) {
             if (row.editMode === true) {
                 return h(
                     NSpace,
@@ -114,7 +122,7 @@ const columns = [
  * 数据获取
  */
 const loading = ref(false)
-const userList = ref([] as any[])
+const userList = ref([] as Row[])
 const fetchData = () => {
     loading.value = true;
     getUserList().then((data) => {

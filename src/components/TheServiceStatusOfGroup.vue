@@ -6,7 +6,9 @@
 <script lang="ts" setup>
 import { NList, NListItem, NMenu, NSpin, NSwitch, NThing, NDataTable } from "naive-ui";
 import { h, ref, toRefs, watch } from 'vue';
+import type { PropType } from 'vue';
 import { setServicState } from "../api/sv";
+import type { GroupServiceDetail } from "../api/sv";
 
 const props = defineProps({
     gid: {
@@ -14,7 +16,7 @@ const props = defineProps({
         required: true,
     },
     svData: {
-        type: Array,
+        type: Object as PropType<GroupServiceDetail['sv']>,
         required: true,
     }
 })
@@ -27,7 +29,7 @@ const columns = [
     {
         title: '服务名称',
         key: 'svname',
-        render: (row) => row.svname + (row.enabled_globally ? '' : ' (已被全局禁用)'),
+        render: (row: any) => row.svname + (row.enabled_globally ? '' : ' (已被全局禁用)'),
     },
     {
         title: '描述',
@@ -36,7 +38,7 @@ const columns = [
     {
         title: '开关',
         key: 'enable',
-        render: (row) => h(
+        render: (row: any) => h(
             NSwitch,
             {
                 value: row.enabled,
